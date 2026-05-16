@@ -10,8 +10,15 @@ The pipeline depends on AWS services, Airflow, and datasets that are pre-provisi
 
 ## Getting Started
 
-Open the Udacity Workspace for this project and follow the instructions in the classroom. The code you work with lives in the [`starter/`](starter/) directory — see [starter/README.md](starter/README.md) for a description of its
-contents.
+Follow the instructions in the classroom to set up the AWS resources using the provided CloudFormation template. Airflow in the workspace loads DAGs from this directory automatically — complete the `#### YOUR CODE HERE` sections in the DAG files.
+
+## Project structure
+
+- `setup/` — DAGs to bootstrap project data and run the pipeline
+- `raw/` — raw ingestion DAG and Glue script
+- `transactions/` — transactions layer DAG, Glue script, and SQL
+- `analytics/` — analytics layer DAG, Glue script, and SQL
+- `lakehouse_infrastructure.yml` — CloudFormation template for the AWS resources
 
 ## License
 
