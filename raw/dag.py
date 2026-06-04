@@ -28,14 +28,11 @@ S3_BUCKET = "{{ var.value.s3_bucket }}"
 # for the glue_script within the raw directory
 #### YOUR CODE HERE
 
-# Keep this line unchanged
-#### YOUR CODE HERE
-
 # Create variables for the connection ids here
 #### YOUR CODE HERE
 
 # Keep this line unchanged
-#### YOUR CODE HERE
+REGION = "us-east-1"
 
 # Initialize an Asset that is emitted by the `run_pipeline` dag.
 #### YOUR CODE HERE
@@ -59,7 +56,7 @@ S3_BUCKET = "{{ var.value.s3_bucket }}"
     #### YOUR CODE HERE
         
         # Pull the data interval value from the 
-        # inlet Asset's metadata
+        # latest inlet Asset events metadata
         #### YOUR CODE HERE
 
         # Initialize an S3Hook
@@ -76,7 +73,7 @@ S3_BUCKET = "{{ var.value.s3_bucket }}"
         #### YOUR CODE HERE
 
     # Keep this line unchanged
-    table_keys = capture_landing_keys()
+    table_keys = capture_landing_keys(S3_BUCKET)
 
     # Fill in the partial configurations for the GlueJobOperator
     submit_glue_jobs = GlueJobOperator.partial(

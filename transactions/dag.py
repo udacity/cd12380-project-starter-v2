@@ -185,38 +185,30 @@ TABLES = [
             # - Ensure the task is triggered as long as
             #   one upstream task succeeds and none have failed
             # - Do not assign the operator to a variable. 
-            # SQLCheckOperator(
-            #     task_id=f"{table_name}_pk_unique",
-            #     conn_id=AWS_CONN_ID,
-            #     sql=f"""
-            #         SELECT CASE
-            #             WHEN COUNT(*) = COUNT(DISTINCT ({pk_expr}))
-            #             THEN 1 ELSE 0
-            #         END
-            #         FROM transactions.{table_name}
-            #     """,
-            #     trigger_rule="none_failed_min_one_success",
-            # )
+            f"""
+                SELECT CASE
+                    WHEN COUNT(*) = COUNT(DISTINCT ({pk_expr}))
+                    THEN 1 ELSE 0
+                END
+                FROM transactions.{table_name}
+            """
+
 
         # Pass the following SQL query to an SQLCheckOperator with an Athena Connection
         # - Ensure the task is triggered as long as
         #   one upstream task succeeds and none have failed
         # - This task should be initialized outside of the for loop above
         # - Do not assign the operator to a variable
-        # SQLCheckOperator(
-        #     task_id="events_version_resolution_rate",
-        #     conn_id=AWS_CONN_ID,
-        #     sql="""
-        #         SELECT CASE
-        #             WHEN COUNT(*) = 0 THEN 1
-        #             WHEN CAST(SUM(CASE WHEN version_id IS NULL THEN 1 ELSE 0 END) AS DOUBLE)
-        #                  / COUNT(*) < 0.01
-        #             THEN 1 ELSE 0
-        #         END
-        #         FROM transactions.events
-        #     """,
-        #     trigger_rule="none_failed_min_one_success",
-        # )
+        """
+                SELECT CASE
+                    WHEN COUNT(*) = 0 THEN 1
+                    WHEN CAST(SUM(CASE WHEN version_id IS NULL THEN 1 ELSE 0 END) AS DOUBLE)
+                         / COUNT(*) < 0.01
+                    THEN 1 ELSE 0
+                END
+                FROM transactions.events
+            """
+
 
     # Alter this task so it emits an event indicating transactions
     # have been updated. 
