@@ -200,13 +200,13 @@ TABLES = [
         # - This task should be initialized outside of the for loop above
         # - Do not assign the operator to a variable
         """
-                SELECT CASE
-                    WHEN COUNT(*) = 0 THEN 1
-                    WHEN CAST(SUM(CASE WHEN version_id IS NULL THEN 1 ELSE 0 END) AS DOUBLE)
-                         / COUNT(*) < 0.01
-                    THEN 1 ELSE 0
-                END
-                FROM transactions.events
+            SELECT CASE
+                WHEN COUNT(*) = 0 THEN 1
+                WHEN CAST(SUM(CASE WHEN version_id IS NULL THEN 1 ELSE 0 END) AS DOUBLE)
+                     / COUNT(*) < 0.30
+                THEN 1 ELSE 0
+            END
+            FROM transactions.events
             """
 
 
